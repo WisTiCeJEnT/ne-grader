@@ -2,6 +2,7 @@ import sys
 import os
 detail = False
 keep = False
+exception = ["\n"]
 if len(sys.argv)==3:
     if sys.argv[1]=="-d":
         detail = True
@@ -23,13 +24,30 @@ numOfTestCase = int(config[0])
 score = 0
 for i in range(1,numOfTestCase+1):
     os.system(f"{f}/{f}.out < testcase/{f}/{i}.in > {f}/{i}.ans")
-    if detail:
-        print("True answer : Your answer : Result")
+if detail:
+    print("True answer : Your answer : Result")
 for i in range(1,numOfTestCase+1):
     sol = open(f"testcase/{f}/{i}.sol").read()
     ans = open(f"{f}/{i}.ans").read()
+    while sol[-1] in exception:
+        sol = sol[0:-1]
+    while ans[-1] in exception:
+        ans = ans[0:-1]
+    sol = sol.split('\n')
+    ans = ans.split('\n')
+    for j in range(len(sol)):
+        while sol[j][-1] == ' ':
+            sol[j] = sol[j][0:-1]
+    for j in range(len(ans)):
+        while ans[j][-1] == ' ':
+            ans[j] = ans[j][0:-1]
     if detail:
-        print(sol,":",ans,end=" : ")
+        if len(sol) == 1 and len(ans)==1:
+            print(f"{sol[0]:12}: {ans[0]:12}",end=": ")
+        else:
+            for j in range(min(len(sol),len(ans))):
+                print(f"{sol[j]:12}| {ans[j]:12}")
+            print(" "*26,end=": ")
         if sol==ans:
             print("P")
             score += 1
