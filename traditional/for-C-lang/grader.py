@@ -36,9 +36,13 @@ for i in range(1,numOfTestCase+1):
     sol = sol.split('\n')
     ans = ans.split('\n')
     for j in range(len(sol)):
+        if ans[j]=="":
+            continue
         while sol[j][-1] == ' ':
             sol[j] = sol[j][0:-1]
     for j in range(len(ans)):
+        if ans[j]=="":
+            continue
         while ans[j][-1] == ' ':
             ans[j] = ans[j][0:-1]
     if detail:
@@ -47,6 +51,8 @@ for i in range(1,numOfTestCase+1):
         else:
             for j in range(min(len(sol),len(ans))):
                 print(f"{sol[j]:12}| {ans[j]:12}")
+            if len(ans) != len(sol):
+                print("True answer or your answer have more line")
             print(" "*26,end=": ")
         if sol==ans:
             print("P")
