@@ -6,22 +6,24 @@ void g()
     int i,j,k;
     for(i=0;i<n;i++)
     {
-        int tmp = 0;
-        j = n-1;
-        while(tbl[j][i] == '-' && j>=0)
+        char tmp[n];
+        k = 0;
+        for(j=n-1;j>=0;j--)
         {
-            tmp ++;
-            j--;
+            if (tbl[j][i]!='-')
+            {
+                tmp[k] = tbl[j][i];
+                k++;
+            }
         }
-        for(k=n-1;k>=j;k--)
+        for(j=k;j<n;j++)
         {
-            if(k-tmp<0)
-                tbl[k][i] = '-';
-            else
-                tbl[k][i] = tbl[k-tmp][i];
+            tmp[j] = '-';
         }
-        for(k=0;k<tmp;k++)
-            tbl[k][i] = '-';
+        for(j=0;j<n;j++)
+        {
+            tbl[n-j-1][i] = tmp[j];
+        }
     }
 }
 void r()
@@ -73,7 +75,8 @@ int main()
     scanf("%d %d",&n,&t);
     char cmd[t+1];
     int i,j,k;
-    scanf("%s",cmd);
+    for(i=0;i<t;i++)
+        scanf(" %c",&cmd[i]);
     for(i=0;i<n;i++)
     {
         for(j=0;j<n;j++)
@@ -91,6 +94,19 @@ int main()
         {
             l();
         }
+        //===============
+        /*
+        for(j=0;j<n;j++)
+        {
+            for(k=0;k<n;k++)
+            {
+                printf("%c ",tbl[j][k]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+        */
+        //===============
     }
 
     for(j=0;j<n;j++)
